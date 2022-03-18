@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
 
     //3D场景计数器
     public float timer = 0;
-    private float currentTime = 5f;
+    private float currentTime = 30f;
     public Text txt_Timer;
     public GameObject Flowchart_over;
 
