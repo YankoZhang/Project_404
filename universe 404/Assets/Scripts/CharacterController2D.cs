@@ -25,7 +25,7 @@ public class CharacterController2D : MonoBehaviour
 	private void Start()
     {
 		//返回时移到传送前位置
-		//transform.position = currentPos;
+		transform.position = currentPos;
 	}
     private void Awake()
 	{
