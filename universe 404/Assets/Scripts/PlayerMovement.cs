@@ -8,7 +8,6 @@ public class PlayerMovement : MonoBehaviour {
 
 	public float runSpeed;
 	public bool canMove = true;
-	public bool canJump = false;
 
 	float horizontalMove = 0f;
 	bool jump = false;
@@ -34,7 +33,7 @@ public class PlayerMovement : MonoBehaviour {
 
 		horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
-		if (Input.GetKeyDown(KeyCode.Space) && canJump == true)
+		if (Input.GetKeyDown(KeyCode.Space))
 		{
 			jump = true;
 		}
