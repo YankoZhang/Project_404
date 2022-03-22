@@ -42,4 +42,5 @@ public class Shard : MonoBehaviour
             SetCollected(false);
         }
     }
+    
 }

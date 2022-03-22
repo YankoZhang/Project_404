@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
+using Fungus;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,6 +22,11 @@ public class GameManager : MonoBehaviour
     private float currentTime = 30f;
     public Text txt_Timer;
     public GameObject Flowchart_over;
+
+    //定义myflowchart
+    public Fungus.Flowchart myflowchart;
+    public int TotalShardCount;
+
 
     /// <summary>
     /// 上一个检查点的 UniqueId
@@ -40,7 +46,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //Player.transform.position = pos.position;
+        
     }
 
     private void Awake()
@@ -62,9 +68,18 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        //设置TotalShardCount的值
+        FlowChartSwitch(7);
+        FlowChartSwitch(14);
+        FlowChartSwitch(21);
+        FlowChartSwitch(28);
+
+
+
         txt_Shard.text = "Shard:" + ShardCount;
         
-        if (ShardCount == 3)
+        if (ShardCount == 7)
         {
             AI.SetActive(true);
         }
@@ -123,6 +138,16 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
     }
+
+    //对话内容转换方法，在7 14 21 28时候调用
+    private void FlowChartSwitch(int a)
+    {
+        if(TotalShardCount == a)
+        {
+            myflowchart.SetIntegerVariable("TotalShardCount", a);
+        }
+    }
+
 
     private void OnLevelWasLoaded(int level)
     {

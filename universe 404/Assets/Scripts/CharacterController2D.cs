@@ -25,7 +25,7 @@ public class CharacterController2D : MonoBehaviour
 	private void Start()
     {
 		//返回时移到传送前位置
-		transform.position = currentPos;
+		//transform.position = currentPos;
 	}
     private void Awake()
 	{
@@ -48,7 +48,7 @@ public class CharacterController2D : MonoBehaviour
 
 		
 		//收集足够的宇宙碎片后激活AI&对话
-		if (GameManager.instance.ShardCount == 3)
+		if (GameManager.instance.ShardCount == 7)
 		{
 			AI.SetActive(true);
 			Flowchart.SetActive(true);
@@ -56,8 +56,6 @@ public class CharacterController2D : MonoBehaviour
 		}
      
 	}
-
-
 	public void Move(float move, bool crouch, bool jump)
 	{
 		// If crouching, check to see if the character can stand up
