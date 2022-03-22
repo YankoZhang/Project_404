@@ -40,6 +40,7 @@ public class Shard : MonoBehaviour
         {
             GameManager.instance.CollectShard(this);
             SetCollected(false);
+            GameManager.instance.TotalShardCount++;
         }
     }
     

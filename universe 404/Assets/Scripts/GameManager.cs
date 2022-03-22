@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     public GameObject Flowchart_over;
 
     //定义myflowchart
-    public Fungus.Flowchart myflowchart;
+    public Flowchart myflowchart;
     public int TotalShardCount;
 
 
@@ -68,13 +68,25 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+      
         //设置TotalShardCount的值
-        FlowChartSwitch(7);
-        FlowChartSwitch(14);
-        FlowChartSwitch(21);
-        FlowChartSwitch(28);
-
+        if (TotalShardCount == 7)
+        {
+            FlowChartSwitch(7);
+            Debug.Log("弹出对话框");
+        }
+        if (TotalShardCount == 14)
+        {
+            FlowChartSwitch(14);
+        }
+        if (TotalShardCount == 21)
+        {
+            FlowChartSwitch(21);
+        }
+        if (TotalShardCount == 28)
+        {
+            FlowChartSwitch(28);
+        }
 
 
         txt_Shard.text = "Shard:" + ShardCount;
@@ -140,12 +152,9 @@ public class GameManager : MonoBehaviour
     }
 
     //对话内容转换方法，在7 14 21 28时候调用
-    private void FlowChartSwitch(int a)
+   private void FlowChartSwitch(int a)
     {
-        if(TotalShardCount == a)
-        {
-            myflowchart.SetIntegerVariable("TotalShardCount", a);
-        }
+        myflowchart.SetIntegerVariable("TotalShardCount", a);
     }
 
 

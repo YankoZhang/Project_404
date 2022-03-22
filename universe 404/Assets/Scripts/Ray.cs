@@ -8,6 +8,7 @@ public class Ray : MonoBehaviour
     RaycastHit hit;
 
     public GameObject computeOutline;
+    public GameObject pickup;
     //屏幕参考点的位置
     Vector3 pos = new Vector3(Screen.width / 2.0f, Screen.height / 2.0f);
     // Start is called before the first frame update
@@ -19,7 +20,6 @@ public class Ray : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        pos.x = pos.x >= Screen.width ? 0.0f : pos.x = 1.0f;
         //生成射线
         ray = Camera.main.ScreenPointToRay(pos);
         //射线与物体碰撞
@@ -30,11 +30,13 @@ public class Ray : MonoBehaviour
             {
                 Debug.Log("射线检测到物体 ");
                 computeOutline.SetActive(true);
+                pickup.SetActive(true);
             }
             if (hit.transform.name != "computer")
             {
                 Debug.Log("射线检测到物体 ");
                 computeOutline.SetActive(false);
+                pickup.SetActive(false);
             }
         }
         
