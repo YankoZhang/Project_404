@@ -5813,8 +5813,11 @@ Transform:
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 <<<<<<< HEAD
+<<<<<<< HEAD
 --- !u!1001 &2005854335
 =======
+=======
+>>>>>>> parent of c48d7f2 (保存点shader graph)
 --- !u!1 &1941220214
 GameObject:
   m_ObjectHideFlags: 0
@@ -6427,6 +6430,7 @@ PrefabInstance:
         type: 3}
       propertyPath: myflowchart
       value: 
+<<<<<<< HEAD
       objectReference: {fileID: 1541739257}
     - target: {fileID: 4676309328420083990, guid: 38f0d36b742f1f74aa5bbab6764bfe76,
         type: 3}
@@ -6437,6 +6441,8 @@ PrefabInstance:
         type: 3}
       propertyPath: TotalShardCount
       value: 0
+=======
+>>>>>>> parent of c48d7f2 (保存点shader graph)
       objectReference: {fileID: 0}
     - target: {fileID: 4676309328420083991, guid: 38f0d36b742f1f74aa5bbab6764bfe76,
         type: 3}
