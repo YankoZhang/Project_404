@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour
         }
         txt_Timer.text = "Time:" + Math.Round(currentTime, 1);
     } 
-
+    
     public void SetCanMoveToTrue()
     {
        Player.GetComponent<PlayerMovement>().canMove = true;
