@@ -8,6 +8,9 @@ TagManager:
   - Ground
   - Score
   - CinemachineTarget
+  - TargetCanvas
+  - TimerText
+  - ShardText
   layers:
   - Default
   - TransparentFX
