@@ -28,13 +28,11 @@ public class Ray : MonoBehaviour
             Debug.DrawLine(ray.origin, hit.point, Color.red);
             if(hit.transform.name == "computer")
             {
-                Debug.Log("射线检测到物体 ");
                 computeOutline.SetActive(true);
                 pickup.SetActive(true);
             }
             if (hit.transform.name != "computer")
             {
-                Debug.Log("射线检测到物体 ");
                 computeOutline.SetActive(false);
                 pickup.SetActive(false);
             }

@@ -10,23 +10,18 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    /// <summary>
+    /// 目标 HUD 的图像
+    /// </summary>
+    public List<Sprite> TargetImages;
 
-
-
-    public Text txt_Shard;
     public GameObject Player;
     public GameObject AI;
 
-    //3D场景计数器
-    public float timer = 0;
-    private float currentTime = 30f;
-    public Text txt_Timer;
-    public GameObject Flowchart_over;
-
-    //定义myflowchart
-    public Flowchart myflowchart;
-    public int TotalShardCount;
-
+    /// <summary>
+    /// 3D 场景中，找到目标的时间限制
+    /// </summary>
+    public float FindObjectTime = 30f;
 
     /// <summary>
     /// 上一个检查点的 UniqueId
@@ -41,8 +36,12 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// 当前可以使用的碎片数量
     /// </summary>
-    public int ShardCount;
+    public int ShardCount = 0;
 
+    Text _textTimer;
+    Text _textShard;
+    float _timeLeft = 30f;
+    bool _transitionBegan = false;
 
     private void Start()
     {
@@ -52,58 +51,40 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         // 不允许多个 manager 存在
-        //if (instance != null)
-        //{
-          //  Destroy(gameObject);
-            //return;
-        //}
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         // manager 重置场景时保存（存储碎片/检查点信息）
         instance = this;
         DontDestroyOnLoad(gameObject);
 
-        // TODO: 重置场景后分配不同物体参数（reference 重置）
+   
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        BlockSignals.OnBlockEnd += OnBlockEnd;
+
+
+        _textShard = GameObject.Find("ShardText")?.GetComponent<Text>();
     }
 
     // Update is called once per frame
     void Update()
     {
-      
-        //设置TotalShardCount的值
-        if (TotalShardCount == 7)
+        // 3D 场景下，30秒倒计时后激活传送对话
+        if (!_transitionBegan && SceneManager.GetActiveScene().name == "3D")
         {
-            FlowChartSwitch(7);
-            Debug.Log("弹出对话框");
+            _timeLeft -= Time.deltaTime;
+            if (_timeLeft <= 0)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                GameObject.Find("Flowchart_Timeout").GetComponent<Flowchart>().ExecuteBlock("Start");
+                _timeLeft = 0;
+                _transitionBegan = true;
+            }
+            _textTimer.text = "Time: " + Math.Round(_timeLeft, 1);
         }
-        if (TotalShardCount == 14)
-        {
-            FlowChartSwitch(14);
-        }
-        if (TotalShardCount == 21)
-        {
-            FlowChartSwitch(21);
-        }
-        if (TotalShardCount == 28)
-        {
-            FlowChartSwitch(28);
-        }
-
-
-        txt_Shard.text = "Shard:" + ShardCount;
-        
-        if (ShardCount == 7)
-        {
-            AI.SetActive(true);
-        }
-        //30秒倒计时后激活传送对话
-        currentTime -= Time.deltaTime;
-        if (currentTime <= timer)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Flowchart_over.SetActive(true);
-            currentTime = 0;
-        }
-        txt_Timer.text = "Time:" + Math.Round(currentTime, 1);
     } 
     
     public void SetCanMoveToTrue()
@@ -140,6 +121,21 @@ public class GameManager : MonoBehaviour
 
         CollectedShards.Add(id.uniqueId);
         ShardCount++;
+
+        if (ShardCount == 7)
+        {
+            AI.SetActive(true);
+        }
+
+        var total = CollectedShards.Count;
+
+        // 每 7 个碎片触发 Fungus 的对话和场景转换
+        if (total % 7 == 0)
+        {
+            FlowChartSwitch(total);
+        }
+
+        _textShard.text = "Shard: " + ShardCount;
     }
 
     /// <summary>
@@ -148,35 +144,69 @@ public class GameManager : MonoBehaviour
     public void Reload()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
     }
 
-    //对话内容转换方法，在7 14 21 28时候调用
-   private void FlowChartSwitch(int a)
+    /// <summary>
+    /// 对话内容转换方法，在7 14 21 28时候调用
+    /// </summary>
+    /// <param name="a">碎片数量</param>
+    private void FlowChartSwitch(int a)
     {
-        myflowchart.SetIntegerVariable("TotalShardCount", a);
+        var flowchartGameObject = GameObject.Find("Flowchart_Enter3D");
+        var comp = flowchartGameObject.GetComponent<Flowchart>();
+        comp.SetIntegerVariable("TotalShardCount", a);
+        comp.ExecuteBlock("Start");
     }
 
 
-    private void OnLevelWasLoaded(int level)
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (LastCheckpoint != null)
+        if (scene.name == "2D")
         {
-            foreach (Checkpoint cp in FindObjectsOfType<Checkpoint>())
+            // 2D 场景
+
+            Player = GameObject.FindGameObjectWithTag("Player");
+            _textShard = GameObject.Find("Text_Shard").GetComponent<Text>();
+
+            if (LastCheckpoint != null)
             {
-                if (cp.GetComponent<UniqueId>().uniqueId == LastCheckpoint)
+                foreach (Checkpoint cp in FindObjectsOfType<Checkpoint>())
                 {
-                    GameObject.FindGameObjectWithTag("Player").transform.position = cp.transform.position;
-                    break;
-                }    
-                    
-            }
-        }
+                    if (cp.GetComponent<UniqueId>().uniqueId == LastCheckpoint)
+                    {
+                        Player.transform.position = cp.transform.position;
+                        break;
+                    }
 
-        foreach (Shard shard in FindObjectsOfType<Shard>())
+                }
+            }
+
+            foreach (Shard shard in FindObjectsOfType<Shard>())
+            {
+                if (CollectedShards.Contains(shard.GetComponent<UniqueId>().uniqueId))
+                    shard.SetCollected(true);
+            }
+        } else if (scene.name == "3D")
         {
-            if (CollectedShards.Contains(shard.GetComponent<UniqueId>().uniqueId))
-                shard.SetCollected(true);
+            // 3D 场景
+
+            _transitionBegan = false;
+            _timeLeft = FindObjectTime;
+            _textTimer = GameObject.Find("Text_TimeLeft").GetComponent<Text>();
+
+            var image = GameObject.FindGameObjectWithTag("TargetCanvas").GetComponent<Image>();
+            image.sprite = TargetImages[CollectedShards.Count / 7 - 1];
         }
+    }
+
+    void OnBlockEnd(Block block)
+    {
+        Debug.Log("Block ended: " + block.BlockName);
+        /*
+        if (block.BlockName == "ReturnTo2D")
+        {
+            SceneManager.LoadScene("2D");
+        }
+        */
     }
 }
