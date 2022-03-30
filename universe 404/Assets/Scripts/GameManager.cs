@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
     float _timeLeft = 30f;
     bool _transitionBegan = false;
 
+  
     private void Start()
     {
         
@@ -86,26 +87,7 @@ public class GameManager : MonoBehaviour
             _textTimer.text = "Time: " + Math.Round(_timeLeft, 1);
         }
     } 
-    
-    public void SetCanMoveToTrue()
-    {
-       Player.GetComponent<PlayerMovement>().canMove = true;
-    }
-
-    public void SetCanMoveToFalse()
-    {
-        Player.GetComponent<PlayerMovement>().canMove = false;
-    }
-
-    public void To2Dlevel()
-    {
-        SceneManager.LoadScene(0);
-    }
-
-    public void CanTransfer()
-    {
-        SceneManager.LoadScene(1);
-    }
+   
 
     /// <summary>
     /// 收集一个碎片。
@@ -122,10 +104,6 @@ public class GameManager : MonoBehaviour
         CollectedShards.Add(id.uniqueId);
         ShardCount++;
 
-        if (ShardCount == 7)
-        {
-            AI.SetActive(true);
-        }
 
         var total = CollectedShards.Count;
 
@@ -133,6 +111,9 @@ public class GameManager : MonoBehaviour
         if (total % 7 == 0)
         {
             FlowChartSwitch(total);
+            //对话时角色无法行动
+            Player = GameObject.FindGameObjectWithTag("Player");
+            Player.GetComponent<PlayerMovement>().canMove = false;
         }
 
         _textShard.text = "Shard: " + ShardCount;
@@ -184,7 +165,7 @@ public class GameManager : MonoBehaviour
             foreach (Shard shard in FindObjectsOfType<Shard>())
             {
                 if (CollectedShards.Contains(shard.GetComponent<UniqueId>().uniqueId))
-                    shard.SetCollected(true);
+                    shard.SetCollected(true); 
             }
         } else if (scene.name == "3D")
         {

@@ -1411,6 +1411,11 @@ namespace Fungus
             return modified;
         }
 
+        public static implicit operator Flowchart(GameObject v)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

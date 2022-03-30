@@ -11,6 +11,8 @@ TagManager:
   - TargetCanvas
   - TimerText
   - ShardText
+  - AI
+  - Flowchart_Enter3D
   layers:
   - Default
   - TransparentFX

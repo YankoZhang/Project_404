@@ -23,7 +23,7 @@ public class Ray : MonoBehaviour
         //生成射线
         ray = Camera.main.ScreenPointToRay(pos);
         //射线与物体碰撞
-        if(Physics.Raycast(ray,out hit, 100.0f))
+        if(Physics.Raycast(ray,out hit, 10.0f))
         {
             Debug.DrawLine(ray.origin, hit.point, Color.red);
             if(hit.transform.name == "computer")
@@ -31,11 +31,12 @@ public class Ray : MonoBehaviour
                 computeOutline.SetActive(true);
                 pickup.SetActive(true);
             }
-            if (hit.transform.name != "computer")
+            else
             {
                 computeOutline.SetActive(false);
                 pickup.SetActive(false);
             }
+           
         }
         
     }
