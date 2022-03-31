@@ -116,8 +116,20 @@ public class GameManager : MonoBehaviour
             Player.GetComponent<PlayerMovement>().canMove = false;
         }
 
-        _textShard.text = "Shard: " + ShardCount;
+        _textShard.text = " " + ShardCount;
     }
+
+    public void SetCanMoveToTrue()
+    {
+        Player.GetComponent<PlayerMovement>().canMove = true;
+    }
+
+    public void SetCanMoveToFalse()
+    {
+        Player.GetComponent<PlayerMovement>().canMove = false;
+    }
+
+
 
     /// <summary>
     /// 重置当前场景。玩家的位置会设置在上一个存档点（如果有）。

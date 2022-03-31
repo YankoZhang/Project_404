@@ -13,7 +13,9 @@ public class PlayerMovement : MonoBehaviour {
 	bool jump = false;
 	bool crouch = false;
 
-    private void Start()
+	public Animator anim;
+
+	private void Start()
     {
 	
 	}
@@ -24,11 +26,11 @@ public class PlayerMovement : MonoBehaviour {
 		if(canMove == true)
         {
 			runSpeed = 40;
-
 		}
 		if (canMove == false)
 		{
 			runSpeed = 0;
+
 		}
 
 		horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
@@ -55,5 +57,13 @@ public class PlayerMovement : MonoBehaviour {
 		// Move our character
 		controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
 		jump = false;
+        if (horizontalMove != 0)
+        {
+			anim.SetBool("isRun", true);
+		}
+		else
+        {
+			anim.SetBool("isRun", false);
+		}
 	}
 }
