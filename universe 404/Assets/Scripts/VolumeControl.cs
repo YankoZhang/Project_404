@@ -21,17 +21,16 @@ public class VolumeControl : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (canSwitch)
-        {
-            myVignette.intensity.value = Mathf.SmoothDamp(myVignette.intensity.value, 0.35f, ref currentVelocity, 1f);
-            // myVignette.rounded.value = false;
-            Invoke("RoundedSwitch", 3f);
-        }
+       
     }
     // Update is called once per frame
     void Update()
     {
-      
+        if (canSwitch)
+        {
+            myVignette.intensity.value = Mathf.SmoothDamp(myVignette.intensity.value, 0.4f, ref currentVelocity, 0.5f);
+            Invoke("RoundedSwitch", 0.8f);
+        }
     }
     private void RoundedSwitch()
     {

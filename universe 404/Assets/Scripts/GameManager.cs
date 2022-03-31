@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     public List<Sprite> TargetImages;
 
     public GameObject Player;
-    public GameObject AI;
+    public GameObject myCanvas;
 
     /// <summary>
     /// 3D 场景中，找到目标的时间限制
@@ -129,7 +129,10 @@ public class GameManager : MonoBehaviour
         Player.GetComponent<PlayerMovement>().canMove = false;
     }
 
-
+    public void setCanvas()
+    {
+        myCanvas.SetActive(true);
+    }
 
     /// <summary>
     /// 重置当前场景。玩家的位置会设置在上一个存档点（如果有）。
