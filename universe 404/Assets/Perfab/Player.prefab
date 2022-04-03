@@ -12,8 +12,6 @@ GameObject:
   - component: {fileID: 5873767018397184486}
   - component: {fileID: 5873767018397184491}
   - component: {fileID: 5873767018397184488}
-  - component: {fileID: 5873767018397184493}
-  - component: {fileID: 5873767018397184490}
   - component: {fileID: 5873767018397184492}
   m_Layer: 8
   m_Name: Player
@@ -109,7 +107,7 @@ MonoBehaviour:
     m_Bits: 567
   m_GroundCheck: {fileID: 5873767018583861466}
   m_CeilingCheck: {fileID: 0}
-  m_CrouchDisableCollider: {fileID: 5873767018397184493}
+  m_CrouchDisableCollider: {fileID: 0}
 --- !u!50 &5873767018397184488
 Rigidbody2D:
   serializedVersion: 4
@@ -131,48 +129,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!61 &5873767018397184493
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5873767018397184487}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: d0056c69a7fd25f439cdb7b26ed3392a, type: 2}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.1322434}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.0625, y: 2}
-    newSize: {x: 2.0625, y: 2}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.8739734, y: 0.7744956}
-  m_EdgeRadius: 0
---- !u!58 &5873767018397184490
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5873767018397184487}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: d0056c69a7fd25f439cdb7b26ed3392a, type: 2}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.54}
-  serializedVersion: 2
-  m_Radius: 0.4485168
 --- !u!114 &5873767018397184492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,6 +144,7 @@ MonoBehaviour:
   controller: {fileID: 5873767018397184491}
   runSpeed: 40
   canMove: 1
+  anim: {fileID: 0}
 --- !u!1 &5873767018583861467
 GameObject:
   m_ObjectHideFlags: 0
