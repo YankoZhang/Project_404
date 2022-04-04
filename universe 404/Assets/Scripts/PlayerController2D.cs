@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CharacterController2D : MonoBehaviour
+public class PlayerController2D : MonoBehaviour
 {
 	[SerializeField] private float m_JumpForce = 400f;							// Amount of force added when the player jumps.
 	[Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;			// Amount of maxSpeed applied to crouching movement. 1 = 100%
@@ -20,7 +20,7 @@ public class CharacterController2D : MonoBehaviour
 
 	public Animator anim;
 
-	private static Vector3 currentPos;
+	public static bool canFlow;
 
 	private void Start()
     {
@@ -46,16 +46,7 @@ public class CharacterController2D : MonoBehaviour
 				m_Grounded = true;
 		}
 
-		if(m_Rigidbody2D.velocity.y <0)
-        {
-			anim.SetBool("isJump", false);
-			anim.SetBool("isFall", true);
-		}
-		if(m_Rigidbody2D.velocity.y == 0)
-        {
-			anim.SetBool("isJump", false);
-			anim.SetBool("isFall", false);
-		}
+		
 
 	}
 	public void Move(float move, bool crouch, bool jump)
@@ -115,7 +106,7 @@ public class CharacterController2D : MonoBehaviour
 		{
 			GameManager.instance.isOver_switch = true;
 		}
-		if (collision.gameObject.name == "Flowchart_???")
+		if (collision.gameObject.name == "Flowchart_111")
 		{
 			GameManager.instance.isOver_switch = true;
 		}

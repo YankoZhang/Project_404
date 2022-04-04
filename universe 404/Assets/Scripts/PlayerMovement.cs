@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
-	public CharacterController2D controller;
+	public PlayerController2D controller;
 
 	public float runSpeed;
 	public bool canMove = true;
@@ -13,11 +13,12 @@ public class PlayerMovement : MonoBehaviour {
 	bool jump = false;
 	bool crouch = false;
 
+	public Rigidbody2D myRigidbody2D;
 	public Animator anim;
 
 	private void Start()
     {
-
+		myRigidbody2D = GetComponent<Rigidbody2D>();
 	}
 
     // Update is called once per frame
@@ -64,6 +65,17 @@ public class PlayerMovement : MonoBehaviour {
 		else
         {
 			anim.SetBool("isRun", false);
+		}
+
+		if (myRigidbody2D.velocity.y < 0)
+		{
+			anim.SetBool("isJump", false);
+			anim.SetBool("isFall", true);
+		}
+		if (myRigidbody2D.velocity.y == 0)
+		{
+			anim.SetBool("isJump", false);
+			anim.SetBool("isFall", false);
 		}
 	}
 }

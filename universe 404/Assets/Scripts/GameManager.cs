@@ -49,6 +49,8 @@ public class GameManager : MonoBehaviour
     public bool isOver_start;
     public bool isOver_switch;
     public bool isOver_111;
+
+    public Flowchart flowchart_111;
     private void Start()
     {
      
@@ -68,19 +70,20 @@ public class GameManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
         DontDestroyOnLoad(myCanvas);
-       
+ 
 
         SceneManager.sceneLoaded += OnSceneLoaded;
         BlockSignals.OnBlockEnd += OnBlockEnd;
 
 
         _textShard = GameObject.Find("ShardText")?.GetComponent<Text>();
-   
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         // 3D 场景下，30秒倒计时后激活传送对话
         if (!_transitionBegan && SceneManager.GetActiveScene().name == "3D")
         {
@@ -106,8 +109,9 @@ public class GameManager : MonoBehaviour
         }
         if (isOver_111)
         {
-            GameObject.Find("Flowchart_???").SetActive(false);
+            GameObject.Find("Flowchart_111").SetActive(false);
         }
+
     } 
    
 
@@ -176,6 +180,7 @@ public class GameManager : MonoBehaviour
         comp.SetIntegerVariable("TotalShardCount", a);
         comp.ExecuteBlock("Start");
     }
+   
 
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
