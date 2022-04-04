@@ -43,10 +43,15 @@ public class GameManager : MonoBehaviour
     float _timeLeft = 30f;
     bool _transitionBegan = false;
 
-  
+
+    public Vector3 currentPos;
+    //
+    public bool isOver_start;
+    public bool isOver_switch;
+    public bool isOver_111;
     private void Start()
     {
-        
+     
     }
 
     private void Awake()
@@ -57,17 +62,20 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+     
 
         // manager 重置场景时保存（存储碎片/检查点信息）
         instance = this;
         DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(myCanvas);
+       
 
-   
         SceneManager.sceneLoaded += OnSceneLoaded;
         BlockSignals.OnBlockEnd += OnBlockEnd;
 
 
         _textShard = GameObject.Find("ShardText")?.GetComponent<Text>();
+   
     }
 
     // Update is called once per frame
@@ -85,6 +93,20 @@ public class GameManager : MonoBehaviour
                 _transitionBegan = true;
             }
             _textTimer.text = "Time: " + Math.Round(_timeLeft, 1);
+        }
+
+            //
+            if (isOver_start)
+        {
+            GameObject.Find("Flowchart_start").SetActive(false);
+        }
+        if (isOver_switch)
+        {
+            GameObject.Find("Flowchart_switch").SetActive(false);
+        }
+        if (isOver_111)
+        {
+            GameObject.Find("Flowchart_???").SetActive(false);
         }
     } 
    
@@ -133,6 +155,7 @@ public class GameManager : MonoBehaviour
     {
         myCanvas.SetActive(true);
     }
+    
 
     /// <summary>
     /// 重置当前场景。玩家的位置会设置在上一个存档点（如果有）。
@@ -160,10 +183,8 @@ public class GameManager : MonoBehaviour
         if (scene.name == "2D")
         {
             // 2D 场景
-
             Player = GameObject.FindGameObjectWithTag("Player");
             _textShard = GameObject.Find("Text_Shard").GetComponent<Text>();
-
             if (LastCheckpoint != null)
             {
                 foreach (Checkpoint cp in FindObjectsOfType<Checkpoint>())
@@ -205,4 +226,5 @@ public class GameManager : MonoBehaviour
         }
         */
     }
+   
 }

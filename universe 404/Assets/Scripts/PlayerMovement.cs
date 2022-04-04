@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	private void Start()
     {
-	
+
 	}
 
     // Update is called once per frame
@@ -38,6 +38,7 @@ public class PlayerMovement : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
 			jump = true;
+			anim.SetBool("isJump", true);
 		}
 
 		if (Input.GetButtonDown("Crouch"))
@@ -47,8 +48,7 @@ public class PlayerMovement : MonoBehaviour {
 		{
 			crouch = false;
 		}
-
-
+		
 	}
   
 

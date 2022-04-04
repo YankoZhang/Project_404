@@ -18,8 +18,10 @@ public class CharacterController2D : MonoBehaviour
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 velocity = Vector3.zero;
 
-	
+	public Animator anim;
+
 	private static Vector3 currentPos;
+
 	private void Start()
     {
 		//返回时移到传送前位置
@@ -42,6 +44,17 @@ public class CharacterController2D : MonoBehaviour
 		{
 			if (colliders[i].gameObject != gameObject)
 				m_Grounded = true;
+		}
+
+		if(m_Rigidbody2D.velocity.y <0)
+        {
+			anim.SetBool("isJump", false);
+			anim.SetBool("isFall", true);
+		}
+		if(m_Rigidbody2D.velocity.y == 0)
+        {
+			anim.SetBool("isJump", false);
+			anim.SetBool("isFall", false);
 		}
 
 	}
@@ -91,6 +104,20 @@ public class CharacterController2D : MonoBehaviour
 		theScale.x *= -1;
 		transform.localScale = theScale;
 	}
-	
 
+	private void OnTriggerExit2D(Collider2D collision)
+	{
+		if (collision.gameObject.name == "Flowchart_start")
+        {
+			GameManager.instance.isOver_start = true;
+		}
+		if (collision.gameObject.name == "Flowchart_switch")
+		{
+			GameManager.instance.isOver_switch = true;
+		}
+		if (collision.gameObject.name == "Flowchart_???")
+		{
+			GameManager.instance.isOver_switch = true;
+		}
+	}
 }
