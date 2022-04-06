@@ -13,6 +13,7 @@ TagManager:
   - ShardText
   - AI
   - Flowchart_Enter3D
+  - Checkpoint
   layers:
   - Default
   - TransparentFX

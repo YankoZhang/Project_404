@@ -5,6 +5,7 @@ using UnityEngine;
 public class Laser : MonoBehaviour
 {
     public LineRenderer lineRenderer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,12 +15,17 @@ public class Laser : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         //…Ë÷√LineRendererdµƒŒª÷√
         lineRenderer.SetPosition(0, transform.position);
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.left);
         if (hit)
         {
             lineRenderer.SetPosition(1, hit.point);
+        }
+        if (hit.collider.tag == "Player")
+        {
+            Debug.Log("YOU DIED");
         }
     }
 

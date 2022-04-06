@@ -13,14 +13,17 @@ public class Cover : MonoBehaviour
     }
 
     // Update is called once per frame
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
             anim.SetBool("isDisappear", true);
             anim.SetBool("isReappear", false);
         }
-        else
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
         {
             anim.SetBool("isDisappear", false);
             anim.SetBool("isReappear", true);

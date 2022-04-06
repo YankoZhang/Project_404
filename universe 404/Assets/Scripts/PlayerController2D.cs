@@ -19,13 +19,14 @@ public class PlayerController2D : MonoBehaviour
 	private Vector3 velocity = Vector3.zero;
 
 	public Animator anim;
+	public Animator anim_elevater;
+	public Animator anim_enemyHit1;
 
 	public static bool canFlow;
 
 	private void Start()
     {
-		//返回时移到传送前位置
-		//transform.position = currentPos;
+		
 	}
     private void Awake()
 	{
@@ -109,6 +110,35 @@ public class PlayerController2D : MonoBehaviour
 		if (collision.gameObject.name == "Flowchart_111")
 		{
 			GameManager.instance.isOver_switch = true;
+		}
+		if (collision.gameObject.name == "EnmeyHit")
+		{
+			anim_enemyHit1.SetBool("canRun", false);
+		}
+	}
+	private void OnTriggerStay2D(Collider2D collision)
+    {
+		if (collision.gameObject.name == "Wind")
+        {
+			m_Rigidbody2D.AddForce(Vector2.up * 40f);
+		}
+
+		if (collision.gameObject.name == "EnmeyHit")
+		{
+			anim_enemyHit1.SetBool("canRun", true);
+		}
+     
+	}
+
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		if (collision.gameObject.name == "elevater_3")
+		{
+			anim_elevater.SetBool("canMove", true);
+		}
+		else
+        {
+			anim_elevater.SetBool("canMove", false);
 		}
 	}
 }
