@@ -1,4 +1,5 @@
 using UnityEngine;
+using Fungus;
 
 public class PlayerController2D : MonoBehaviour
 {
@@ -99,6 +100,11 @@ public class PlayerController2D : MonoBehaviour
 
 	private void OnTriggerExit2D(Collider2D collision)
 	{
+		if (collision.GetComponent<Flowchart>() != null && collision.GetComponent<UniqueId>() != null)
+        {
+			GameManager.instance.TriggeredFlowcharts.Add(collision.GetComponent<UniqueId>().uniqueId);
+        }
+		/*
 		if (collision.gameObject.name == "Flowchart_start")
         {
 			GameManager.instance.isOver_start = true;
@@ -111,6 +117,7 @@ public class PlayerController2D : MonoBehaviour
 		{
 			GameManager.instance.isOver_switch = true;
 		}
+		*/
 		if (collision.gameObject.name == "EnmeyHit")
 		{
 			anim_enemyHit1.SetBool("canRun", false);

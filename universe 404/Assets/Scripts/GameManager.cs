@@ -38,6 +38,11 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public int ShardCount = 0;
 
+    /// <summary>
+    /// 所有已经触发的对话
+    /// </summary>
+    public List<string> TriggeredFlowcharts;
+
     Text _textTimer;
     Text _textShard;
     float _timeLeft = 30f;
@@ -53,7 +58,8 @@ public class GameManager : MonoBehaviour
     public Flowchart flowchart_111;
     private void Start()
     {
-     
+        CollectedShards = new List<String>();
+        TriggeredFlowcharts = new List<String>();
     }
 
     private void Awake()
@@ -96,20 +102,6 @@ public class GameManager : MonoBehaviour
                 _transitionBegan = true;
             }
             _textTimer.text = "Time: " + Math.Round(_timeLeft, 1);
-        }
-
-            //
-            if (isOver_start)
-        {
-            GameObject.Find("Flowchart_start").SetActive(false);
-        }
-        if (isOver_switch)
-        {
-            GameObject.Find("Flowchart_switch").SetActive(false);
-        }
-        if (isOver_111)
-        {
-            GameObject.Find("Flowchart_111").SetActive(false);
         }
 
     } 
@@ -208,6 +200,27 @@ public class GameManager : MonoBehaviour
                 if (CollectedShards.Contains(shard.GetComponent<UniqueId>().uniqueId))
                     shard.SetCollected(true); 
             }
+
+            foreach (var flowchart in FindObjectsOfType<Flowchart>())
+            {
+                var uniqueId = flowchart.GetComponent<UniqueId>();
+                if (uniqueId != null && TriggeredFlowcharts.Contains(uniqueId.uniqueId))
+                    Destroy(flowchart.gameObject);
+            }
+
+            if (isOver_start)
+            {
+                GameObject.Find("Flowchart_start").SetActive(false);
+            }
+            if (isOver_switch)
+            {
+                GameObject.Find("Flowchart_switch").SetActive(false);
+            }
+            if (isOver_111)
+            {
+                GameObject.Find("Flowchart_111").SetActive(false);
+            }
+
         } else if (scene.name == "3D")
         {
             // 3D 场景
@@ -217,7 +230,7 @@ public class GameManager : MonoBehaviour
             _textTimer = GameObject.Find("Text_TimeLeft").GetComponent<Text>();
 
             var image = GameObject.FindGameObjectWithTag("TargetCanvas").GetComponent<Image>();
-            image.sprite = TargetImages[CollectedShards.Count / 7 - 1];
+            image.sprite = TargetImages[CollectedShards.Count / 7];
         }
     }
 
